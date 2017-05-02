@@ -21,12 +21,12 @@ function playtime(cinterval)
 	 	seconds = Math.floor((distance % (1000 * 60)));
 
 	  // Display the result in the element with id="timer-panel"
-	  $("#mid-col").html("<h1><center><b>"+seconds + "</b></center></h1>") ;
+	  $("#mid-col").html("<center><b>"+seconds + "</b></center>") ;
 
 	  if (seconds <= 1) 
 		  	{
 			    clearInterval(x);
-			   $("#mid-col").html("<h3><center>TIME UP</center></h3>");
+			   $("#mid-col").html("<h2 style='margin-top:40px;'><center><b>TIME UP</b></center></h2>");
 		//	  	ls=ls+1;
 		//	  	updateScore();
 		  	}
@@ -36,7 +36,7 @@ function playtime(cinterval)
 		  	{
 			   // clearInterval(x);
 			 	document.getElementById('mid-col').style.backgroundColor ="red"
-			  	document.getElementById('mid-col').style.color ="blue" 
+			  	document.getElementById('mid-col').style.color ="black" 
 		  	}
 
 	  
