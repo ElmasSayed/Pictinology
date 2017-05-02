@@ -99,19 +99,6 @@ body{
 	background-color: #ff6262;
 	float:right;
 }
-/*
-.question-image{
-	width:100%; 
-	height: 250px;
-    margin-left:10px;
-    margin-top:3px;
-    margin-right:10px;
-    margin-bottom:10px;
-	border-style:solid;
-	border-color:black;
-	border-width: 20px;
-	border-radius: 8px;
-}*/
 
 .question-image{
 	width:100%; 
@@ -195,5 +182,19 @@ body{
 	border-color: yellow;
 }
 
+.answer{
+	font-size:70px;
+	/*visibility: hidden;*/
+	position:fixed;
+	top:150px;
+	left:400px;
+	z-index: 1000;
+	color:white;
+	background-color: gray;
+	border-radius: 15px;
+	width: 800px;
+	padding-left: 70px;
 
-/**/
+
+}
+
