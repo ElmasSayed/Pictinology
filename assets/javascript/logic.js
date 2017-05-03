@@ -8,7 +8,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-$(document).ready(function() {
 var database = firebase.database();
 var chatData = database.ref("/chat");
 var playersRef = database.ref("players");
@@ -26,6 +25,9 @@ var currentAnswer = null;
 var distance = 0;
 var randCountry;
 var x;
+
+$(document).ready(function() {
+
 
 //Variabels for Ajax
 var country = [
@@ -47,9 +49,8 @@ function picker() {
             randCountry: randCountry
         });
     }
-    console.log("randCountry in picker is " + randCountry);
+    console.log("Player " + playerNum + " called this. randCountry in picker is " + randCountry);
 }
-
 
 
 // USERNAME LISTENERS
@@ -109,8 +110,6 @@ $("#chat-send").click(function() {
         if (currentStage === 1) {
 
             if (message.toLowerCase() == randCountry.toLowerCase()) {
-
-
                
                 if (playerNum === 1) {
                     currentStageRef.set(2);
@@ -138,6 +137,19 @@ $("#chat-input").keypress(function(e) {
             time: firebase.database.ServerValue.TIMESTAMP,
             idNum: playerNum
         });
+
+        if (currentStage === 1) {
+
+            if (message.toLowerCase() == randCountry.toLowerCase()) {
+               
+                if (playerNum === 1) {
+                    currentStageRef.set(2);
+                    
+                } else {
+                    currentStageRef.set(3);
+                }
+            }
+        }
 
         $("#chat-input").val("");
     }
@@ -176,7 +188,7 @@ playersRef.on("value", function(snapshot) {
 
     // If theres a player 1, fill in name and win loss data
     if (playerOneExists) {
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
             playerOneData.name + "&api_key=dc6zaTOxFJmzC&limit=3";
         var p1pic;
 
@@ -199,8 +211,8 @@ playersRef.on("value", function(snapshot) {
         $("#player1-name").text(playerOneData.name);
         $("#player1-score").text(playerOneData.score);
         //Picks the country when player 1 signs in
-        if (playerNum === 1) {
-            picker();
+        if (playerNum === 1 && !playerTwoExists) {
+         picker();
         }
     } else {
 
@@ -212,7 +224,7 @@ playersRef.on("value", function(snapshot) {
 
     // If theres a player 2, fill in name and win/loss data
     if (playerTwoExists) {
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
             playerTwoData.name + "&api_key=dc6zaTOxFJmzC&limit=3";
         var p2pic;
 
@@ -234,6 +246,7 @@ playersRef.on("value", function(snapshot) {
 
         $("#player2-name").text(playerTwoData.name);
         $("#player2-score").text(playerTwoData.score);
+
     } else {
 
         // If no player 2, clear win/loss and show waiting
@@ -243,9 +256,9 @@ playersRef.on("value", function(snapshot) {
     }
 });
 
-currentCountryRef.on("value", function(snapshot) {
-    randCountry = snapshot.val().randCountry;
-    console.log("randCountry from snapshot " + randCountry);
+currentCountryRef.on("value", function(shot) {
+    randCountry = shot.val().randCountry;
+    console.log("randCountry from shot " + randCountry);
 });
 
 
@@ -342,19 +355,20 @@ currentStageRef.on("value", function(snapshot) {
 
             //Player 1 got it right
             } else if (currentStage === 2) {
-
+              console.log("stage 2");
+              clearInterval(x);
               playersRef.child("1").child("score").set(playerOneData.score + distance);
 
               if (playerNum === 1) {
                 chatData.push({
-                  name: username,
+                  name: "",
                   message: playerOneData.name + " won.  The answer was " + randCountry,
                   time: firebase.database.ServerValue.TIMESTAMP,
                   idNum: 0
                 });
               }
 
-              //currentStageRef.set(5);  
+              currentStageRef.set(5);  
 
             }
     }
@@ -362,13 +376,13 @@ currentStageRef.on("value", function(snapshot) {
 
     if (playerNum) {
         if (currentStage === 3) {
-            console.log("stage 2");
-
+            console.log("stage 3");
+            clearInterval(x);
             playersRef.child("2").child("score").set(playerTwoData.score + distance);
 
             if (playerNum === 1) {
                 chatData.push({
-                  name: username,
+                  name: "",
                   message: playerTwoData.name + " won.  The answer was " + randCountry,
                   time: firebase.database.ServerValue.TIMESTAMP,
                   idNum: 0
@@ -376,7 +390,7 @@ currentStageRef.on("value", function(snapshot) {
              } 
             
 
-            //currentStageRef.set(5);  
+            currentStageRef.set(5);  
         } else if (currentStage === 4) {
             console.log("stage 4");
 
@@ -389,7 +403,7 @@ currentStageRef.on("value", function(snapshot) {
                    });
             }
 
-             // currentStageRef.set(5);
+             currentStageRef.set(5);
         } else if (currentStage === 5) {
             //clean up and reset
             console.log("stage 5 reached");
@@ -401,12 +415,12 @@ currentStageRef.on("value", function(snapshot) {
                 
               };
               clearInterval(x);
-              
+              currentCountryRef.remove();
               $("#mid-col").empty();
               $('#mid-col').css("backgroundColor", "black");
               $('#mid-col').css("color", "white");
               
-              setTimeout(moveOn, 5000);
+             // setTimeout(moveOn, 5000);
 
           } else {
                 
