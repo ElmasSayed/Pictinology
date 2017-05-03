@@ -12,13 +12,12 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
-    <link rel="stylesheet" href="http://s.mlcdn.co/animate.css"> 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/zoomInDown.css">
     <!--Timer-->
-    <script src="assets/javascript/timer.js"></script>
+    <script src="assets/javascript/logic.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--main logic-->
     <!-- <script src="logic.js"></script> -->
@@ -41,20 +40,20 @@
                 
                 <!-- LOGIN -->
                 <div class="col-md-12 login-panel animated fadeInLeft">
-                    <input type="text" class="login-input"  placeholder="Your name"/>
-                    <button class="btn btn-primary login-button">Login</button>
+                    <input type="text" class="login-input" id="username" placeholder="Your name"/>
+                    <button class="btn btn-primary login-button" id= "login-button">Login</button>
                 </div>
                 
                 <!-- PLAYER 1 -->
                 <div class="col-md-12">
                     <div>
                         <div class="col-lg-12">
-                            <img class="avatar" src="assets/images/player2.gif">
+                            <img class="avatar" id="player1-pic" src="assets/images/egg.jpg">
                         </div>
                         <div class="col-lg-12 teammate">
-                            <span>Prince</span>
+                            <span id="player1-name">Player 1</span>
                             <span class="pointslabel">points</span>
-                            <span class="badge points">42</span>
+                            <span class="badge points" id="player1-score">0</span>
                         </div>
                     </div>
                 </div>
@@ -63,12 +62,12 @@
                 <div class="col-md-12">
                     <div>
                         <div class="col-lg-12">
-                            <img class="avatar" src="assets/images/player3.gif">
+                            <img class="avatar" id="player2-pic" src="assets/images/egg.jpg">
                         </div>
                         <div class="col-lg-12 teammate">
-                            <span>Aariana</span>
+                            <span id="player2-name">Player 2</span>
                             <span class="pointslabel">points</span>
-                            <span class="badge points">42</span>
+                            <span class="badge points" id="player2-score">0</span>
                         </div>
                     </div>
                 </div>
@@ -78,9 +77,9 @@
             <div class="col-md-9">
                 <div class="col-md-12">
                     <div class="col-md-6">
-                            <img class="question-image" src="assets/images/usa.png">
+                            <img class="question-image" id="cImg" src="assets/images/usa.png">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="api">
                             <img class="question-image" src="assets/images/clue.gif">
                     </div>
                 </div>
@@ -90,12 +89,7 @@
                     <div class="col-lg-12">
                         <!-- chat box -->
                         <div class="col-lg-8 chat-message-list  animated zoomInDown"> 
-                            <p> <b>Aariana:</b>  Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p> <b>Kevin: </b>  ap into electronic typesetting,essentially unchanged. It was popularised in the</p>
-                            <p> <b>Prince: </b> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
-                            <p> <b>Aariana: </b> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p> <b>Kevin: </b>  ap into electronic typesetting, remaining essentially unchanged. It was popularised in the</p>
-                            <p> <b>Prince: </b> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
+                            
                         </div>
                         <!-- Timer -->
                         <div class="col-lg-4">
@@ -112,7 +106,7 @@
                         <div class="chat-message">
                             <label>Message:</label>
                             <input class="chat-input" type="text">
-                            <button class="btn btn-primary chat-send-button" id="answerModal"><a class="myModal" href="#" data-toggle="modal" data-target="#myModal"></a>Send Message</button>
+                            <button class="btn btn-primary chat-send-button" id="chat-send">Send Message</button>
                         </div>
 
                     </div>
@@ -124,7 +118,7 @@
 
      </div> <!--End mainContainer -->
 
-    <!--THE END--------------------------------------------------------------------------------------------------- -->
+   
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -150,7 +144,7 @@
       </div>
     </div>
     
-<!--Modal end --------------------------------------------------------------------------------------------------- -->
+
     <!-- Zoom in down -->
 
     <!-- Modal -->
